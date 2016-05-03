@@ -1,0 +1,27 @@
+<!--
+/**
+ * @description    actionStatus markup to decorate AJAX calls
+ * @author         Aaron Dominguez - www.nube53.com
+ * @date           03 May 2016
+ */
+-->
+<apex:component >
+
+	<!-- Load CSS -->
+    <apex:stylesheet value="{!URLFOR($Resource.VT_StaticResources,'css/VT_actionStatusStyleSheet.css')}"/>
+        
+    <apex:actionStatus id="renderSpinner" rendered="true" onstop="loadJSScripts();"> <!-- onstop attribute can be removed -->
+        <apex:facet name="start">
+            <div id="loadingWSO"
+                class="waitingSearchDiv waitingSearchDivOpacity"
+                style="width: 100%; height: 100%; margin-left: 0px; margin-top: 0px; display: block; position: fixed; top: 0px; bottom: 0px;">
+                <div id="loadingWS" class="waitingSearchDiv" style="width: 100%; height: 100%; display: block">
+                    <div id="waitingSearchHolder" class="waitingSearchHolder" style="width: 120px">
+                        <img class="waitingImage" src="/img/loading.gif" /> <span class="waitingDescription">Please wait...</span>
+                    </div>
+                </div>
+            </div>           
+        </apex:facet>    
+    </apex:actionStatus>
+
+</apex:component>
