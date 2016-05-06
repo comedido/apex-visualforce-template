@@ -1,0 +1,31 @@
+<!--
+ * @name            VT_CSSLoader
+ * @author          Aaron Dominguez - www.nube53.com
+ * @date            6 May 2016
+ * @description     Component in charge of dynamically load CSS resources on demand.
+ * @Revision 		
+-->
+<apex:component layout="block">
+	<!--Attribute Definition -->
+		<apex:attribute name="LoadMainResources" description="If true, it will inject main CSS resources" type="String" required="false" default="true"/>
+	    <apex:attribute name="ExtensionResources" description="It will parse and dynamically load CSS extension resources" type="String[]" required="false"/>
+	<!--End Attribute Definition -->
+	<!--Main CSS Resources loader -->
+		<apex:outputPanel id="mainCSSPanel" layout="block" rendered="{!LoadMainResources=='true'}" /> 
+			<!--Bootstrap-->
+			<apex:stylesheet value="{!URLFOR($Resource.VT_StaticResources,'/css/bootstrap.min.css')}"/>
+			<!--Custom styles-->
+			<apex:stylesheet value="{!URLFOR($Resource.VT_StaticResources,'/css/styles.css')}"/>
+		<apex:outputPanel />
+	<!--End Main CSS Resources loader -->
+	<!--Extension CSS Resources loader -->
+		<apex:outputPanel id="extenssionCSSPanel" layout="block" rendered="{!ExtensionResources<>''}" /> 
+			<apex:repeat value="{!ExtensionResources}" var="reourceName">
+				<apex:outputPanel layout="block" rendered="{!reourceName == 'DataTables'}" > 
+					<apex:stylesheet value="{!URLFOR($Resource.VT_StaticResources, '/css/dataTables.bootstrap.min.css')}" />
+					<apex:stylesheet value="{!URLFOR($Resource.VT_StaticResources, '/css/responsive.dataTables.min.css')}" />
+				</apex:outputPanel>
+			</apex:repeat>
+		<apex:outputPanel />
+	<!--End Extension CSS Resources loader -->
+</apex:component>

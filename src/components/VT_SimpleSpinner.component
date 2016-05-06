@@ -1,8 +1,9 @@
 <!--
-/**
- * @description    actionStatus markup to decorate AJAX calls
+ * @name           VT_SimpleSpinner
  * @author         Aaron Dominguez - www.nube53.com
  * @date           03 May 2016
+ * @description    actionStatus markup to decorate AJAX calls
+ * @Revision 
  */
 -->
 <apex:component >

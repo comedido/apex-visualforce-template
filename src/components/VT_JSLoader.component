@@ -1,0 +1,33 @@
+<!--
+ * @name            VT_JSLoader
+ * @author          Aaron Dominguez - www.nube53.com
+ * @date            6 May 2016
+ * @description     Component in charge of dynamically load JS resources on demand.
+ * @Revision 		
+-->
+<apex:component layout="block">
+	<!--Attribute Definition -->
+		<apex:attribute name="LoadMainResources" description="If true, it will inject main JS resources" type="String" required="false" default="true"/>
+	    <apex:attribute name="ExtensionResources" description="It will parse and dynamically load JS extension resources" type="String[]" required="false"/>
+	<!--End Attribute Definition -->
+	<!--Main JS Resources loader -->
+		<apex:outputPanel id="mainJSPanel" layout="block" rendered="{!LoadMainResources=='true'}" />
+			<!-- jQuery -->
+			<apex:includeScript value="{!URLFOR($Resource.VT_StaticResources, '/js/jquery.min.js')}" /> 
+			<!-- Bootstrap -->
+			<apex:includeScript value="{!URLFOR($Resource.VT_StaticResources,'/js/bootstrap.min.js')}" />
+			<!-- Custom Scripts -->
+			<apex:includeScript value="{!URLFOR($Resource.VT_StaticResources,'/js/main.js')}" />
+	<!--End Main JS Resources loader -->
+	<!--Extension JS Resources loader -->
+		<apex:outputPanel id="extenssionJSPanel" layout="block" rendered="{!ExtensionResources<>''}" /> 
+			<apex:repeat value="{!ExtensionResources}" var="resourceName">
+				<apex:outputPanel layout="block" rendered="{!resourceName == 'DataTables'}" > 
+					<apex:includeScript value="{!URLFOR($Resource.VT_StaticResources, '/js/jquery.dataTables.min.js')}" />
+					<apex:includeScript value="{!URLFOR($Resource.VT_StaticResources, '/js/dataTables.bootstrap.min.js')}" />
+					<apex:includeScript value="{!URLFOR($Resource.VT_StaticResources, '/js/dataTables.responsive.min.js')}" />
+				</apex:outputPanel>
+			</apex:repeat>
+		<apex:outputPanel />
+	<!--End Extension JS Resources loader -->
+</apex:component>
