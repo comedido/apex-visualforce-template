@@ -1,0 +1,29 @@
+<!--
+ * @name            VT_ReportPlayer
+ * @author          Aaron Dominguez - aaron@nube53.com
+ * @date            20 October 2016
+ * @description     Page to display report results using VT_ReportResults component
+ * @Revision 		[AD] - 20/10/2016 - Initial version.
+-->
+<apex:page standardStylesheets="false" applyBodyTag="false" sidebar="false" showHeader="false" readOnly="true">
+	
+	<!--Mobile layout-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <head>
+        <apex:stylesheet value="{!URLFOR($Resource.slds, 'assets/styles/salesforce-lightning-design-system.css')}" />
+    </head>
+
+    <body>
+    	<apex:form >
+
+		    <!-- Report Component (summary)-->
+			<c:VT_ReportResults ReportId="00O58000003xrQ2" />
+
+			<!-- Report Component (tabular)-->
+			<c:VT_ReportResults ReportId="00O58000003xrPx" />
+
+		</apex:form>
+	</body>
+
+</apex:page>

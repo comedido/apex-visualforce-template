@@ -1,0 +1,137 @@
+<!--
+ * @name            VT_ReportResults
+ * @author          Aaron Dominguez - aaron@nube53.com
+ * @date            20 October 2016
+ * @description     Component in charge of rendering a report results by a given report Id.
+ * @Revision        [AD] - 20/10/2016 - Initial version.
+-->
+<apex:component controller="VT_ReportResultsController">
+
+    <!--Attribute Definition -->
+    <apex:attribute name="ReportId" 
+                    description="Id del informe a mostrar"  
+                    type="Id" 
+                    required="true" 
+                    assignTo="{!theReportId}"/>
+    <!--END Attribute Definition -->
+
+    <!-- Report results -->
+    <apex:outputPanel id="topResults" layout="block">
+        <article class="slds-card">
+          <div class="slds-card__header slds-grid" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <header class="slds-media slds-media--center slds-has-flexi-truncate">
+              <div class="slds-media__figure">
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+                  <use xlink:href="{!URLFOR($Resource.slds, '/assets/icons/standard-sprite/svg/symbols.svg#contact')}"></use>
+                </svg>
+              </div>
+              Component to display the results of a Salesforce report
+            </header>
+            <div class="slds-no-flex">
+              <apex:commandButton action="{!runReport}" reRender="sectionResults" value="Show Report" styleClass="slds-button slds-button--neutral"/>
+            </div>
+          </div>
+          <div class="slds-card__body">
+              <div class="slds-media__body slds-truncate">
+                <h2>
+                  <a href="javascript:void(0);" class="slds-text-link--reset">
+                    <span class="slds-text-heading--small">
+                        <apex:outputPanel id="sectionResults" styleClass="slds-col--padded slds-size--1-of-1" >
+                            <div class="slds-col--padded slds-size--1-of-1" style="position:relative;">
+                                <div class="slds-text-align--center">
+                                    <!-- TABULAR Report Type -->
+                                    <apex:outputPanel id="tabularReportPanel" layout="block" rendered="{!reportResults.reportType == 'tabular'}">
+                                        <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                                            <thead>
+                                                <tr class="slds-text-heading--label" style="background-color:#EFF2FB" width="50">
+                                                    <apex:repeat value="{!reportResults.tabResp.reportFields}" var="heads">     
+                                                        <th class="slds-is-sortable" scope="col" >
+                                                            <div class="slds-truncate" title="{!heads.fieldLabel}">
+                                                                {!IF(CONTAINS(heads.fieldLabel,':'),RIGHT(heads.fieldLabel,FIND(':',heads.fieldLabel)),heads.fieldLabel)}
+                                                            </div>
+                                                            <div class="slds-icon_container">
+                                                                <svg aria-hidden="true" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon">
+                                                                </svg>
+                                                            </div>
+                                                        </th>                   
+                                                    </apex:repeat>
+                                                </tr>
+                                            </thead>
+                                            <tbody>             
+                                                <apex:repeat value="{!reportResults.tabResp.fieldDataList}" var="cells">
+                                                    <tr>
+                                                        <apex:repeat value="{!cells}" var="cellItem">
+                                                            <td scope="gridcell" data-label="{!cellItem.fieldValue}">
+                                                                <apex:outputPanel styleClass="slds-truncate" title="{!cellItem.fieldValue}" rendered="{!cellItem.isHyperLink}" >
+                                                                    <apex:outputLink value="/{!cellItem.fieldValue}"
+                                                                    >
+                                                                    {!cellItem.fieldLabel}
+                                                                    </apex:outputLink>                      
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="slds-truncate" title="{!cellItem.fieldValue}" rendered="{!!cellItem.isHyperLink}">
+                                                                    {!cellItem.fieldValue}
+                                                                </apex:outputPanel>
+                                                            </td>                                           
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </apex:repeat>                                          
+                                            </tbody>
+                                        </table>
+                                    </apex:outputPanel>
+                                    <!-- END TABULAR Report Type -->
+                                    <!-- SUMMARY Report Type -->
+                                    <apex:outputPanel id="summaryReportPanel" layout="block" rendered="{!reportResults.reportType == 'summary'}">
+                                        <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                                            <thead>
+                                                <tr class="slds-text-heading--label" style="background-color:#EFF2FB" width="50">
+                                                    <apex:repeat value="{!reportResults.sumResp.reportFields}" var="heads">     
+                                                        <th class="slds-is-sortable" scope="col" >
+                                                            <div class="slds-truncate" title="{!heads.fieldLabel}">
+                                                                {!IF(CONTAINS(heads.fieldLabel,':'),RIGHT(heads.fieldLabel,FIND(':',heads.fieldLabel)),heads.fieldLabel)}
+                                                            </div>
+                                                            <div class="slds-icon_container">
+                                                                <svg aria-hidden="true" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon">
+                                                                </svg>
+                                                            </div>
+                                                        </th>                   
+                                                    </apex:repeat>
+                                                </tr>
+                                            </thead>
+                                            <tbody>             
+                                                <apex:repeat value="{!reportResults.sumResp.groupList}" var="groups">    
+                                                    <apex:repeat value="{!groups.fieldDataList}" var="cells">
+                                                        <tr>
+                                                            <apex:repeat value="{!cells}" var="cellItem">
+                                                                <td scope="gridcell" data-label="{!cellItem.fieldValue}">
+                                                                    <apex:outputPanel styleClass="slds-truncate" title="{!cellItem.fieldValue}" rendered="{!cellItem.isHyperLink}" >
+                                                                        <apex:outputLink value="/{!cellItem.fieldValue}"
+                                                                        >
+                                                                        {!cellItem.fieldLabel}
+                                                                        </apex:outputLink>                  
+                                                                    </apex:outputPanel>
+                                                                    <apex:outputPanel styleClass="slds-truncate" title="{!cellItem.fieldValue}" rendered="{!!cellItem.isHyperLink}">
+                                                                        {!cellItem.fieldValue}
+                                                                    </apex:outputPanel>
+                                                                </td>                                       
+                                                            </apex:repeat>
+                                                        </tr>
+                                                    </apex:repeat>    
+                                                </apex:repeat>                                           
+                                            </tbody>
+                                        </table>
+                                    </apex:outputPanel>
+                                    <!-- END SUMMARY Report Type -->
+                                </div>
+                            </div>
+                        </apex:outputPanel>  
+                    </span>
+                  </a>
+                </h2>
+              </div>
+          </div>
+          <div class="slds-card__footer">Aaron Dominguez - www.nube53.com - aaron@nube53.com</div>
+        </article>                                     
+    </apex:outputPanel>
+    <!-- END Report results -->
+
+</apex:component>
