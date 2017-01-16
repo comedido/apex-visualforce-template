@@ -1,0 +1,42 @@
+<!--
+ * @name            VT_ReportPlayerWithTemplate
+ * @author          Aaron Dominguez - aaron@nube53.com
+ * @date            16 January 2017
+ * @description     Example of a page implementing VT_SiteTemplate visualforce template.
+ * @Revision 		[AD] - 16/01/2017 - Initial version.
+-->
+<apex:page controller="VT_ReportPlayerWithTemplateController" showHeader="false" applyBodyTag="false" applyHtmlTag="false" cache="true" standardStylesheets="false" sidebar="false" language="es" deferLastCommandUntilReady="false" docType="html-5.0">
+	<!-- Template Composition -->
+	<apex:composition template="VT_SiteTemplate">
+		<!-- Global variables Definition -->
+		<apex:define name="GlobalVariablesLoader">
+			<apex:variable var="pageDevice" value="Desktop"/>
+		   	<apex:variable var="metaTitle" value="{!metaTitleInfo}"/>
+		   	<apex:variable var="metaDescription" value="{!metaDescriptionInfo}"/>
+		   	<apex:variable var="CSSMainResources" value="{!cssMainResourcesInfo}"/>
+		   	<apex:variable var="CSSExtensionResources" value="{!cssExtensionResourcesInfo}"/>
+		   	<apex:variable var="JSMainResources" value="{!jsMainResourcesInfo}"/>
+		   	<apex:variable var="JSExtensionResources" value="{!jsExtensionResourcesInfo}"/>
+            </apex:define>
+            <!-- END Global variables Definition -->
+            <!-- Header Definition -->
+            <apex:define name="Header">
+            	<!-- <c:VT_Header userFullName="{!visitorFullName}"/> -->
+            </apex:define>
+            <!-- END Header Definition -->
+            <!-- Main Content Definition -->
+            <apex:define name="MainContent">
+            	<!-- Report Component (summary)-->
+				<c:VT_ReportResults ReportId="00O58000003xrQ2" />
+				<!-- Report Component (tabular)-->
+				<c:VT_ReportResults ReportId="00O58000003xrPx" />
+            </apex:define>
+            <!-- END Main Content Definition -->
+        <!-- Footer Definition -->
+        <apex:define name="Footer">
+        	<!-- <c:VT_Footer /> -->
+        </apex:define>
+        <!-- END Footer Content Definition -->
+	</apex:composition>
+	<!-- END Template Composition -->
+</apex:page>

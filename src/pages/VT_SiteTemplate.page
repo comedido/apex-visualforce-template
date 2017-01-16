@@ -1,0 +1,90 @@
+<!--
+ * @name            VT_SiteTemplate
+ * @author          Aaron Dominguez - aaron@nube53.com
+ * @date            20 October 2016
+ * @description     Site template which all visualforce pages will implement.
+ * @Revision 		[AD] - 20/10/2016 - Initial version.
+-->
+<apex:page showHeader="false" applyBodyTag="false" applyHtmlTag="false" cache="true" standardStylesheets="false" sidebar="false" language="es" deferLastCommandUntilReady="false" docType="html-5.0">
+<!--DOM -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
+	<!--head -->
+		<head>
+			<!--GlobalVariables Loader-->
+				<!-- GlobalVariables defined at page level to be used by Template:
+				*    pageDevice: Desktop, Mobile
+				*	 metaTitle: Title to be used in browser bar. 
+				*    metaDescription: Description to be used in browser bar.
+				*	 CSSMainResources: Denotes whether load CSS Main resources or not.
+				*	 CSSExtensionResources: Denotes whether load CSS Extension resources or not.
+				*	 JSMainResources: Denotes whether load JS Main resources or not.
+				*	 JSExtensionResources: Denotes whether load JS Extension resources or not.
+				*    etc.
+				-->	
+				<!--Variables Initialisation -->
+					<apex:variable var="pageDevice" value=""/> 
+					<apex:variable var="metaTitle" value=""/> 				
+					<apex:variable var="metaDescription" value=""/>
+					<apex:variable var="CSSMainResources" value=""/>
+					<apex:variable var="CSSExtensionResources" value=""/>
+					<apex:variable var="JSMainResources" value=""/>
+					<apex:variable var="JSExtensionResources" value=""/>
+				<!--End Variables Initialisation -->
+				<!--Variables injection from page -->
+					<apex:insert name="GlobalVariablesLoader" />
+				<!--End Variables injection from page -->			
+	        <!--End GlobalVariables Loader-->
+	        <!--Meta Definition-->
+		        <title>{!$Site.Name} - {!metaTitle}</title>
+		        <meta name="description" content="{!metaDescription}"/>
+		        <meta charset="utf-8"/>
+		        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		        <meta name="author" content="www.nube53.com"/>
+		        <!-- Mobile meta for responsive view -->
+		        <meta name="viewport" content="width=device-width, initial-scale=1"/>		        
+	        <!--End Meta Definition-->
+	        <!--CSS Loader -->
+	        	<c:VT_CSSLoader LoadMainResources="{!CSSMainResources}" ExtensionResources="{!CSSExtensionResources}" />
+	        <!--End CSS Loader -->
+		</head>
+	<!--End head -->
+	<!--body -->
+		<body onload="" leftmargin="0" rightmargin="0" topmargin="0" bottommargin="0">
+			<apex:form id="pageForm" forceSSL="false">
+				<!-- Spinner that fills the whole page upon AJAX request -->
+				<c:VT_SimpleSpinner />
+				<!-- End Spinner -->
+				<!--Page Header -->
+					<apex:outputPanel id="desktopHeaderTemplatePanel" layout="block" rendered="{!pageDevice=='Desktop'}" styleClass="container">
+						<!-- Approach 1: let the page implement the Header -->
+						<apex:insert name="Header" />
+						<!-- End Approach 1 -->
+						<!-- Approach 2: common header for all pages -->
+						<!-- <c:VT_Header"/>  -->
+						<!-- End Approach 2 -->
+					</apex:outputPanel>
+				<!--End Page Header -->
+				<!--Page Main Content -->
+					<apex:outputPanel id="desktopMainContentTemplatePanel" layout="block" rendered="{!pageDevice=='Desktop'}" styleClass="container">
+						<apex:insert name="MainContent" />
+					</apex:outputPanel>
+				<!--End Main Content -->
+				<!--Page Footer -->
+					<apex:outputPanel id="desktopFooterTemplatePanel" layout="block" rendered="{!pageDevice=='Desktop'}" styleClass="container">
+						<!-- Approach 1: let the page implement the Footer -->
+						<apex:insert name="Footer" />
+						<!-- End Approach 1 -->
+						<!-- Approach 2: common header for all pages -->
+						<!-- <c:VT_Footer"/>  -->
+						<!-- End Approach 2 -->
+					</apex:outputPanel>
+				<!--End Page Footer -->
+			</apex:form>			
+			<!--JS Loader -->
+	        	<c:VT_JSLoader LoadMainResources="{!JSMainResources}" ExtensionResources="{!JSExtensionResources}" />
+	        <!--End JS Loader -->
+		</body>
+	<!--End body -->
+</html>
+<!--End DOM -->	
+</apex:page>
