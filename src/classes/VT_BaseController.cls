@@ -8,7 +8,7 @@ public abstract class VT_BaseController {
     
     //-- CONSTANTS
     private static final Id theUserId = UserInfo.getUserId();
-    //public static final VT_UtilsRecordType recordTypeUtils = PODO_UtilsRecordType.getInstance();
+    //public static final VT_UtilsRecordType recordTypeUtils = VT_UtilsRecordType.getInstance();
 
     //-- ATTRIBUTES
     // Template global variables
