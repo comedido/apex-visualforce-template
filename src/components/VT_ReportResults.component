@@ -28,7 +28,7 @@
               Component to display the results of a Salesforce report
             </header>
             <div class="slds-no-flex">
-              <apex:commandButton action="{!runReport}" reRender="sectionResults" value="Show Report" styleClass="slds-button slds-button--neutral"/>
+              <apex:commandButton action="{!runReport}" reRender="sectionResults" value="Show Report" styleClass="slds-button slds-button--neutral" status="renderLightningSpinner"/>
             </div>
           </div>
           <div class="slds-card__body">

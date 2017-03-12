@@ -1,9 +1,9 @@
 <!--
  * @name            VT_SiteTemplate
  * @author          Aaron Dominguez - aaron@nube53.com
- * @date            20 October 2016
+ * @date            16 January 2017
  * @description     Site template which all visualforce pages will implement.
- * @Revision 		[AD] - 20/10/2016 - Initial version.
+ * @Revision 		[AD] - 16/01/2017 - Initial version.
 -->
 <apex:page showHeader="false" applyBodyTag="false" applyHtmlTag="false" cache="true" standardStylesheets="false" sidebar="false" language="es" deferLastCommandUntilReady="false" docType="html-5.0">
 <!--DOM -->
@@ -53,6 +53,7 @@
 			<apex:form id="pageForm" forceSSL="false">
 				<!-- Spinner that fills the whole page upon AJAX request -->
 				<c:VT_SimpleSpinner />
+				<c:VT_LightningSpinner importSLDS="true"/>
 				<!-- End Spinner -->
 				<!--Page Header -->
 					<apex:outputPanel id="desktopHeaderTemplatePanel" layout="block" rendered="{!pageDevice=='Desktop'}" styleClass="container">
